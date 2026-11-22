@@ -1,0 +1,15 @@
+# Virtual environments
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Heavy media & binary datasets (stored on Google Drive instead)
+data/raw_videos/
+data/processed/
+*.zip
+
+# Model checkpoints & temporary outputs
+results/checkpoints/*.pth
+.DS_Store
+Thumbs.db

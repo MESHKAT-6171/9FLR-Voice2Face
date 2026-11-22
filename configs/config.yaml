@@ -1,0 +1,38 @@
+project:
+  name: "9FLR-Voice2Face"
+  seed: 42
+
+paths:
+  raw_video_dir: "data/raw_videos"       # Update if your 25 GB folder is on another drive (e.g., D:/raw_videos)
+  processed_dir: "data/processed"
+  splits_dir: "data/splits"
+  results_dir: "results"
+
+preprocessing:
+  sample_rate: 16000                     # Standard for Wav2Vec 2.0 & HuBERT
+  clip_duration_sec: 4.0                 # 4-second speech window per sample
+  clips_per_video: 5                     # 2,000 videos x 5 = 10,000 paired samples
+  image_size: 128                        # 128x128 RGB aligned face (fast & crisp on Colab T4)
+  region_size: 48                        # Each of the 9 facial local regions resized to 48x48
+  num_workers: 2                         # Safe limit for 8 GB RAM
+
+splits:
+  ratios:
+    - name: "split_60_30_10"
+      train: 0.60
+      val: 0.30
+      test: 0.10
+    - name: "split_70_20_10"
+      train: 0.70
+      val: 0.20
+      test: 0.10
+
+training:
+  batch_size: 16
+  epochs: 30
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  loss_weights:
+    l1: 1.0
+    lpips: 0.5
+    cosine_id: 0.5
